@@ -1,13 +1,18 @@
 import logging
 import logging.config
 
+from flask_babel import Babel
+
 from blog_platform.api import api_v1
-from flask import Flask
+from flask import Flask, request
 from sqlalchemy_utils import create_database, database_exists
 
 from blog_platform.config import config_by_name
 from blog_platform.core.database.db import db
+from blog_platform.utils.error_handlers import register_error_handlers
 
+# Initialize Babel
+babel = Babel()
 
 def make_app(config_name=None):
     config = config_by_name[config_name]
@@ -29,6 +34,18 @@ def make_app(config_name=None):
     app.config.from_object(config)
     app.register_blueprint(api_v1)
 
+    # Initialize Babel
+    # babel = Babel(app)
+    def get_locale():
+        return request.accept_languages.best_match(['en', 'es', 'fr'])  # Add more languages as needed
+
+    babel.init_app(app, locale_selector=get_locale)
+
+    # @babel.localeselector
+    # def get_locale():
+    #     return request.accept_languages.best_match(['en', 'es', 'fr'])  # Add more languages as needed
+    register_error_handlers(app)
+
     with app.app_context():
         logging.config.fileConfig(app.config.get('LOG_CONFIG_PATH'))
         db.create_all()
@@ -40,7 +57,7 @@ def main():
     app = make_app('dev')
     host = "0.0.0.0"
     port = "5000"
-    app.run(host=host, port=port)
+    app.run(host=host, port=port, debug=False)
 
 
 if __name__ == "__main__":

@@ -1,4 +1,7 @@
+from sqlalchemy.exc import NoResultFound
+
 from blog_platform.database_services.user_database_services import UserDatabaseServices
+from blog_platform.utils.errors import NotFoundError, InternalServerError
 
 
 class UserServices:
@@ -18,11 +21,16 @@ class UserServices:
             raise err
 
     def get_user_by_id(self, user_id):
+        user_database_service = UserDatabaseServices()
         try:
-            user_database_service = UserDatabaseServices()
-            return user_database_service.get_user_by_id(user_id)
+            user = user_database_service.get_user_by_id(user_id)
+            if user is None:
+                raise NotFoundError(message=f"User with ID {user_id} not found")
+            return user
+        except NotFoundError as e:
+            raise e
         except Exception as err:
-            raise err
+            raise InternalServerError(message=str(err))
 
     def update_user(self, user_id, data):
         try:

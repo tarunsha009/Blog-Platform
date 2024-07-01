@@ -80,6 +80,8 @@ class BaseConfig(DatabaseConfig):
     RABBITMQ_PASS = 'guest'
     LOG_CONFIG_PATH = 'C:\\Users\\Richa\\PycharmProjects\\Blog_Platform\\blog_platform\\logging.conf'
     RABBITMQ_URL = f"amqp://{RABBITMQ_USER}:{RABBITMQ_PASS}@rabbitmq-blog:5672"
+    BABEL_DEFAULT_LOCALE = 'en'
+    BABEL_SUPPORTED_LOCALES = ['en', 'es', 'fr']
 
 
 class ProductionConfig(BaseConfig):
