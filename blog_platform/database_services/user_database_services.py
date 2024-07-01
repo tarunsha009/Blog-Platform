@@ -1,43 +1,41 @@
-from blog_platform.core.database.db import db
+# blog_platform/services/user_services.py
 
+from blog_platform.core.database.db import db
 from blog_platform.core.database.models import User
 
 
 class UserDatabaseServices:
-    class UserServices:
+    @staticmethod
+    def add_user(data):
+        user = User(
+            username=data['username'],
+            email=data['email']
+        )
+        db.session.add(user)
+        db.session.commit()
+        return user
 
-        def get_all_users(self):
-            try:
-                user_database_service = UserDatabaseServices()
-                return user_database_service.get_all_users()
-            except Exception as err:
-                raise err
+    @staticmethod
+    def get_user_by_id(user_id):
+        return User.query.get(user_id)
 
-        def add_user(self, data):
-            try:
-                user_database_service = UserDatabaseServices()
-                return user_database_service.add_user(data)
-            except Exception as err:
-                raise err
+    @staticmethod
+    def get_all_users():
+        return User.query.all()
 
-        def get_user_by_id(self, user_id):
-            try:
-                user_database_service = UserDatabaseServices()
-                return user_database_service.get_user_by_id(user_id)
-            except Exception as err:
-                raise err
+    @staticmethod
+    def update_user(user_id, data):
+        user = User.query.get(user_id)
+        if user:
+            user.username = data.get('username', user.username)
+            user.email = data.get('email', user.email)
+            db.session.commit()
+        return user
 
-        def update_user(self, user_id, data):
-            try:
-                user_database_service = UserDatabaseServices()
-                return user_database_service.update_user(user_id, data)
-            except Exception as err:
-                raise err
-
-        def delete_user(self, user_id):
-            try:
-                user_database_service = UserDatabaseServices()
-                return user_database_service.delete_user(user_id)
-            except Exception as err:
-                raise err
-
+    @staticmethod
+    def delete_user(user_id):
+        user = User.query.get(user_id)
+        if user:
+            db.session.delete(user)
+            db.session.commit()
+        return user

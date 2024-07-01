@@ -100,6 +100,7 @@ class DevelopmentConfig(BaseConfig):
 class TestingConfig(BaseConfig):
     ENV = 'testing'
     DEBUG = True
+    DB_NAME = 'blog_platform_test'
 
 
 config_by_name = {'dev': DevelopmentConfig, 'testing': TestingConfig, 'prod': ProductionConfig}

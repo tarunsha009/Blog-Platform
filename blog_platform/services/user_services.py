@@ -20,10 +20,7 @@ class UserServices:
     def get_user_by_id(self, user_id):
         try:
             user_database_service = UserDatabaseServices()
-            user = user_database_service.get_user_by_id(user_id)
-            if user:
-                return user
-            raise ValueError('User not found')
+            return user_database_service.get_user_by_id(user_id)
         except Exception as err:
             raise err
 
@@ -37,6 +34,6 @@ class UserServices:
     def delete_user(self, user_id):
         try:
             user_database_service = UserDatabaseServices()
-            user_database_service.delete_user(user_id)
+            return user_database_service.delete_user(user_id)
         except Exception as err:
             raise err
