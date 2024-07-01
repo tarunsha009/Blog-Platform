@@ -1,6 +1,6 @@
-from blog_platform.lib.database.db import db
+from blog_platform.core.database.db import db
 
-from blog_platform.lib.database.models import User
+from blog_platform.core.database.models import User
 
 
 class UserDatabaseServices:

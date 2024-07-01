@@ -6,7 +6,7 @@ from flask import Flask
 from sqlalchemy_utils import create_database, database_exists
 
 from blog_platform.config import config_by_name
-from blog_platform.lib.database.db import db
+from blog_platform.core.database.db import db
 
 
 def make_app(config_name=None):
