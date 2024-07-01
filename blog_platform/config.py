@@ -78,7 +78,7 @@ class BaseConfig(DatabaseConfig):
     )
     RABBITMQ_USER = 'guest'
     RABBITMQ_PASS = 'guest'
-    LOG_CONFIG_PATH = 'blog_platform/logging.conf'
+    LOG_CONFIG_PATH = 'C:\\Users\\Richa\\PycharmProjects\\Blog_Platform\\blog_platform\\logging.conf'
     RABBITMQ_URL = f"amqp://{RABBITMQ_USER}:{RABBITMQ_PASS}@rabbitmq-blog:5672"
 
 

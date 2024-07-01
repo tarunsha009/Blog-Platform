@@ -4,13 +4,40 @@ from blog_platform.core.database.models import User
 
 
 class UserDatabaseServices:
+    class UserServices:
 
-    def get_all_users(self):
-        return User.query.all()
+        def get_all_users(self):
+            try:
+                user_database_service = UserDatabaseServices()
+                return user_database_service.get_all_users()
+            except Exception as err:
+                raise err
 
-    def add_user(self, data):
-        # try:
-        new_user = User(username=data['username'], email=data['email'])
-        db.session.add(new_user)
-        db.session.commit()
-        return new_user
+        def add_user(self, data):
+            try:
+                user_database_service = UserDatabaseServices()
+                return user_database_service.add_user(data)
+            except Exception as err:
+                raise err
+
+        def get_user_by_id(self, user_id):
+            try:
+                user_database_service = UserDatabaseServices()
+                return user_database_service.get_user_by_id(user_id)
+            except Exception as err:
+                raise err
+
+        def update_user(self, user_id, data):
+            try:
+                user_database_service = UserDatabaseServices()
+                return user_database_service.update_user(user_id, data)
+            except Exception as err:
+                raise err
+
+        def delete_user(self, user_id):
+            try:
+                user_database_service = UserDatabaseServices()
+                return user_database_service.delete_user(user_id)
+            except Exception as err:
+                raise err
+

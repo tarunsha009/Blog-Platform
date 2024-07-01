@@ -5,8 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="418bb3ea-c4e4-4314-b9c6-4ab5b2f6c418" name="Changes" comment="Modification">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/blog_platform/pytest.ini" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/blog_platform/unit_tests/conftest.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/blog_platform/unit_tests/test_user_api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Blog_Platform.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Blog_Platform.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog_platform/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/blog_platform/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog_platform/database_services/user_database_services.py" beforeDir="false" afterPath="$PROJECT_DIR$/blog_platform/database_services/user_database_services.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog_platform/logging.conf" beforeDir="false" afterPath="$PROJECT_DIR$/blog_platform/logging.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog_platform/manage.py" beforeDir="false" afterPath="$PROJECT_DIR$/blog_platform/manage.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog_platform/services/user_services.py" beforeDir="false" afterPath="$PROJECT_DIR$/blog_platform/services/user_services.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +48,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "C:/Users/Richa/PycharmProjects/Blog_Platform",
-    "settings.editor.selected.configurable": "preferences.keymap"
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -52,6 +60,7 @@
   </component>
   <component name="RunManager">
     <configuration name="manage" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Blog_Platform" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -60,10 +69,9 @@
       </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/blog_platform" />
-      <option name="IS_MODULE_SDK" value="false" />
+      <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/blog_platform/manage.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -119,7 +127,15 @@
       <option name="project" value="LOCAL" />
       <updated>1719825126714</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Modification">
+      <option name="closed" value="true" />
+      <created>1719825183743</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1719825183743</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

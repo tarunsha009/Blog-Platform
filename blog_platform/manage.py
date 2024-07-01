@@ -30,7 +30,7 @@ def make_app(config_name=None):
     app.register_blueprint(api_v1)
 
     with app.app_context():
-        # logging.config.fileConfig(app.config.get('LOG_CONFIG_PATH'))
+        logging.config.fileConfig(app.config.get('LOG_CONFIG_PATH'))
         db.create_all()
 
     return app
