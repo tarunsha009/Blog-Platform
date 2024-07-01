@@ -173,7 +173,6 @@ dist/
 downloads/
 eggs/
 .eggs/
-blog_platform/core/
 lib64/
 parts/
 sdist/
