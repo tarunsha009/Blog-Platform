@@ -1,29 +1,24 @@
+# blog_platform/api/v1/error_handlers.py
 from flask import jsonify
-from flask_babel import gettext
-
 from blog_platform.utils.errors import BadRequestError, NotFoundError, InternalServerError
 
-def register_error_handlers(app):
-    @app.errorhandler(BadRequestError)
+def register_error_handlers(api):
+    @api.errorhandler(BadRequestError)
     def handle_bad_request_error(error):
-        response = jsonify({'message': gettext(error.message)})
-        response.status_code = error.status_code
-        return response
+        response = {'message': error.description}
+        return response, error.code
 
-    @app.errorhandler(NotFoundError)
+    @api.errorhandler(NotFoundError)
     def handle_not_found_error(error):
-        response = jsonify({'message': gettext(error.message)})
-        response.status_code = error.status_code
-        return response
+        response = {'message': error.description}
+        return response, error.code
 
-    @app.errorhandler(InternalServerError)
+    @api.errorhandler(InternalServerError)
     def handle_internal_server_error(error):
-        response = jsonify({'message': gettext(error.message)})
-        response.status_code = error.status_code
-        return response
+        response = {'message': error.description}
+        return response, error.code
 
-    @app.errorhandler(Exception)
+    @api.errorhandler(Exception)
     def handle_general_exception(error):
-        response = jsonify({'message': gettext('Internal Server Error')})
-        response.status_code = 500
-        return response
+        response = {'message': 'Internal Server Error'}
+        return response, 500

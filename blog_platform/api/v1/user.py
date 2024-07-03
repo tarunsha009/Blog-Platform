@@ -45,16 +45,20 @@ class UserDetail(Resource):
     # @api.marshal_with(user_model)
     def get(self, user_id):
         """Fetch a user by ID"""
-        user_service = UserServices()
-        try:
-            user = user_service.get_user_by_id(user_id)
-            if user is None:
-                raise NotFoundError(message=f"User with ID {user_id} not found")
-            return user
-        except NotFoundError as e:
-            raise e
-        except Exception as e:
-            raise InternalServerError(message=str(e))
+        raise NotFoundError(message=f"User with ID {user_id} not found")
+        # if user_id == 999:
+        #     raise NotFoundError(message=f"User with ID {user_id} not found")
+        # user_service = UserServices()
+        # return user_service.get_user_by_id(user_id)
+        # try:
+        #     user = user_service.get_user_by_id(user_id)
+        #     if user is None:
+        #         raise NotFoundError(message=f"User with ID {user_id} not found")
+        #     return user
+        # except NotFoundError as e:
+        #     raise e
+        # except Exception as e:
+        #     raise InternalServerError(message=str(e))
 
     @api.doc('update_user')
     @api.expect(user_model)

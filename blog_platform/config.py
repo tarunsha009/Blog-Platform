@@ -8,7 +8,7 @@ class FlaskConfig:
     DEBUG = False
     TESTING = False
     PROPAGATE_EXCEPTIONS = None
-    TRAP_HTTP_EXCEPTIONS = False
+    TRAP_HTTP_EXCEPTIONS = True
     TRAP_BAD_REQUEST_ERRORS = None
     SECRET_KEY = None
     SESSION_COOKIE_NAME = 'session'  # Replace with your session cookie name
@@ -40,7 +40,7 @@ class FlaskRestxConfig(FlaskConfig):
     RESTX_MASK_HEADER = 'X-Fields'  # Header for request masking
     RESTX_MASK_SWAGGER = True  # Mask sensitive data in Swagger UI
     RESTX_INCLUDE_ALL_MODELS = False  # Include all models in Swagger UI
-    BUNDLE_ERRORS = False  # Bundle validation errors
+    BUNDLE_ERRORS = True  # Bundle validation errors
     ERROR_404_HELP = None  # Show 404 help message
     HTTP_BASIC_AUTH_REALM = None  # HTTP Basic Auth realm
     SWAGGER_VALIDATOR_URL = None  # URL for Swagger validator
@@ -82,6 +82,7 @@ class BaseConfig(DatabaseConfig):
     RABBITMQ_URL = f"amqp://{RABBITMQ_USER}:{RABBITMQ_PASS}@rabbitmq-blog:5672"
     BABEL_DEFAULT_LOCALE = 'en'
     BABEL_SUPPORTED_LOCALES = ['en', 'es', 'fr']
+    ERROR_INCLUDE_MESSAGE = False
 
 
 class ProductionConfig(BaseConfig):

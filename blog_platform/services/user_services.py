@@ -1,5 +1,3 @@
-from sqlalchemy.exc import NoResultFound
-
 from blog_platform.database_services.user_database_services import UserDatabaseServices
 from blog_platform.utils.errors import NotFoundError, InternalServerError
 
