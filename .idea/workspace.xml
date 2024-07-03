@@ -4,16 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="418bb3ea-c4e4-4314-b9c6-4ab5b2f6c418" name="Changes" comment="Fixed the custom error handling">
+    <list default="true" id="418bb3ea-c4e4-4314-b9c6-4ab5b2f6c418" name="Changes" comment="Removed babel support for now">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blog_platform/babel.cfg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blog_platform/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/blog_platform/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blog_platform/manage.py" beforeDir="false" afterPath="$PROJECT_DIR$/blog_platform/manage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blog_platform/translations/en/LC_MESSAGES/messages.po" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blog_platform/translations/es/LC_MESSAGES/messages.po" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blog_platform/translations/fr/LC_MESSAGES/messages.po" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blog_platform/utils/error_hndl.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blog_platform/utils/exceptions.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -188,7 +181,15 @@
       <option name="project" value="LOCAL" />
       <updated>1719973894318</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Removed babel support for now">
+      <option name="closed" value="true" />
+      <created>1719975426115</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1719975426115</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -209,6 +210,7 @@
     <MESSAGE value="Added the testing environment for test case execution." />
     <MESSAGE value="Added localization using babel" />
     <MESSAGE value="Fixed the custom error handling" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed the custom error handling" />
+    <MESSAGE value="Removed babel support for now" />
+    <option name="LAST_COMMIT_MESSAGE" value="Removed babel support for now" />
   </component>
 </project>
