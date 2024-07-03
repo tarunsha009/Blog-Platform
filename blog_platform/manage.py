@@ -1,7 +1,6 @@
 import logging
 import logging.config
 
-from flask_babel import Babel
 
 from blog_platform.api import api_v1
 from flask import Flask, request
@@ -32,19 +31,7 @@ def make_app(config_name=None):
     app.config.from_object(config)
     app.register_blueprint(api_v1)
 
-    # Initialize Babel
-    # babel = Babel(app)
     logging.basicConfig(level=logging.DEBUG)
-    def get_locale():
-        return request.accept_languages.best_match(['en', 'es', 'fr'])  # Add more languages as needed
-
-    # babel.init_app(app, locale_selector=get_locale)
-
-    # @babel.localeselector
-    # def get_locale():
-    #     return request.accept_languages.best_match(['en', 'es', 'fr'])  # Add more languages as needed
-
-    # logging.config.fileConfig("C:\\Users\\Richa\\PycharmProjects\\Blog_Platform\\blog_platform\\logging.conf", disable_existing_loggers=False)
     logging.config.fileConfig(fname='logging.conf', disable_existing_loggers=False)
     logger = logging.getLogger(__name__)
     with app.app_context():

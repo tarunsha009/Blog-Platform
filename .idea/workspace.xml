@@ -4,18 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="418bb3ea-c4e4-4314-b9c6-4ab5b2f6c418" name="Changes" comment="Added localization using babel">
-      <change afterPath="$PROJECT_DIR$/blog_platform/utils/error_hndl.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/blog_platform/utils/exceptions.py" afterDir="false" />
+    <list default="true" id="418bb3ea-c4e4-4314-b9c6-4ab5b2f6c418" name="Changes" comment="Fixed the custom error handling">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blog_platform/api/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/blog_platform/api/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blog_platform/api/v1/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/blog_platform/api/v1/user.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog_platform/babel.cfg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/blog_platform/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/blog_platform/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blog_platform/logging.conf" beforeDir="false" afterPath="$PROJECT_DIR$/blog_platform/logging.conf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/blog_platform/manage.py" beforeDir="false" afterPath="$PROJECT_DIR$/blog_platform/manage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blog_platform/services/user_services.py" beforeDir="false" afterPath="$PROJECT_DIR$/blog_platform/services/user_services.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blog_platform/utils/error_handlers.py" beforeDir="false" afterPath="$PROJECT_DIR$/blog_platform/utils/error_handlers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blog_platform/utils/errors.py" beforeDir="false" afterPath="$PROJECT_DIR$/blog_platform/utils/errors.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog_platform/translations/en/LC_MESSAGES/messages.po" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog_platform/translations/es/LC_MESSAGES/messages.po" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog_platform/translations/fr/LC_MESSAGES/messages.po" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog_platform/utils/error_hndl.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog_platform/utils/exceptions.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,12 +47,13 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/Richa/PycharmProjects/Blog_Platform/blog_platform",
+    "last_opened_file_path": "C:/Users/Richa/PycharmProjects/Blog_Platform/blog_platform/translations/es/LC_MESSAGES",
     "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Richa\PycharmProjects\Blog_Platform\blog_platform\translations\es\LC_MESSAGES" />
       <recent name="C:\Users\Richa\PycharmProjects\Blog_Platform\translations\fr" />
       <recent name="C:\Users\Richa\PycharmProjects\Blog_Platform\translations\es" />
     </key>
@@ -181,7 +180,15 @@
       <option name="project" value="LOCAL" />
       <updated>1719846637665</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Fixed the custom error handling">
+      <option name="closed" value="true" />
+      <created>1719973894318</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1719973894318</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -201,6 +208,7 @@
     <MESSAGE value="added tests" />
     <MESSAGE value="Added the testing environment for test case execution." />
     <MESSAGE value="Added localization using babel" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added localization using babel" />
+    <MESSAGE value="Fixed the custom error handling" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed the custom error handling" />
   </component>
 </project>
