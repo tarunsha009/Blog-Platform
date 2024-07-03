@@ -3,7 +3,7 @@
 from marshmallow import Schema, fields, validate, ValidationError
 
 from blog_platform.core.database.db import db
-from blog_platform.database_services.user_database_services import UserDatabaseServices
+from blog_platform.database_services.user_database_services import UserDBService
 
 def create_schema():
     db.create_all()

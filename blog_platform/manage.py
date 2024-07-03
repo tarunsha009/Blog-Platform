@@ -31,8 +31,8 @@ def make_app(config_name=None):
     app.config.from_object(config)
     app.register_blueprint(api_v1)
 
-    logging.basicConfig(level=logging.DEBUG)
-    logging.config.fileConfig(fname='logging.conf', disable_existing_loggers=False)
+    # logging.basicConfig(level=logging.DEBUG)
+    # logging.config.fileConfig(fname='logging.conf', disable_existing_loggers=False)
     logger = logging.getLogger(__name__)
     with app.app_context():
         # logging.config.fileConfig(app.config.get('LOG_CONFIG_PATH'))

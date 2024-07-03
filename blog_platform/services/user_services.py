@@ -1,45 +1,20 @@
-from blog_platform.database_services.user_database_services import UserDatabaseServices
-from blog_platform.utils.errors import NotFoundError, InternalServerError
+from blog_platform.database_services.user_database_services import UserDBService
+from blog_platform.utils.errors import BadRequestError, NotFoundError, InternalServerError
 
 
 class UserServices:
 
-    def get_all_users(self):
-        try:
-            user_database_service = UserDatabaseServices()
-            return user_database_service.get_all_users()
-        except Exception as err:
-            raise err
+    @staticmethod
+    def register_user(data):
+        username = data.get('username')
+        password = data.get('password')
+        email = data.get('email')
 
-    def add_user(self, data):
-        try:
-            user_database_service = UserDatabaseServices()
-            return user_database_service.add_user(data)
-        except Exception as err:
-            raise err
+        if not username or not password or not email:
+            raise BadRequestError("Username, password, and email are required")
 
-    def get_user_by_id(self, user_id):
-        user_database_service = UserDatabaseServices()
-        try:
-            user = user_database_service.get_user_by_id(user_id)
-            if user is None:
-                raise NotFoundError(message=f"User with ID {user_id} not found")
-            return user
-        except NotFoundError as e:
-            raise e
-        except Exception as err:
-            raise InternalServerError(message=str(err))
+        if UserDBService.get_user_by_username(username):
+            raise BadRequestError("Username already exists")
 
-    def update_user(self, user_id, data):
-        try:
-            user_database_service = UserDatabaseServices()
-            return user_database_service.update_user(user_id, data)
-        except Exception as err:
-            raise err
-
-    def delete_user(self, user_id):
-        try:
-            user_database_service = UserDatabaseServices()
-            return user_database_service.delete_user(user_id)
-        except Exception as err:
-            raise err
+        user = UserDBService.create_user(username, password, email)
+        return {"message": "User registered successfully", "user_id": user.id}, 201

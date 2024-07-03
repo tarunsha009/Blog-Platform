@@ -22,3 +22,7 @@ A RESTful API for a blog platform built with Flask and PostgreSQL.
 ## Contributing
 - Create a branch for your feature or bug fix.
 - Submit a pull request with a description of your changes.
+
+<!-- ## Code Coverage
+
+[![codecov](https://codecov.io/gh/yourusername/yourrepository/branch/main/graph/badge.svg?token=YOUR_CODECOV_TOKEN)](https://codecov.io/gh/yourusername/yourrepository) -->
