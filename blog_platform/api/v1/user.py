@@ -1,6 +1,6 @@
 from flask_restx import Resource, Namespace, fields
 from flask import request
-from blog_platform.services.user_services import UserServices
+from blog_platform.services.user_services import UserService
 from blog_platform.database.schemas import UserSchema
 from marshmallow.exceptions import ValidationError
 
@@ -20,4 +20,4 @@ class UserRegister(Resource):
     @api.expect(user_registration_model, validate=True)
     def post(self):
         data = request.get_json()
-        return UserServices.register_user(data)
+        return UserService.register_user(data)

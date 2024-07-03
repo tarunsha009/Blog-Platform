@@ -1,7 +1,8 @@
 # blog_platform/unit_tests/test_user.py
 import json
 
-def test_user_registration(client, init_db):
+def test_user_registration(client):
+    """Test user registration with valid data."""
     response = client.post(
         '/blog/User/register',
         data=json.dumps(dict(
@@ -15,19 +16,8 @@ def test_user_registration(client, init_db):
     assert response.status_code == 201
     assert 'User registered successfully' in data['message']
 
-def test_user_registration_existing_username(client, init_db):
-    # First registration
-    client.post(
-        '/blog/User/register',
-        data=json.dumps(dict(
-            username='testuser',
-            password='testpassword',
-            email='test@example.com'
-        )),
-        content_type='application/json'
-    )
-    
-    # Second registration with the same username
+def test_user_registration_existing_username(client, new_user):
+    """Test user registration with an existing username."""
     response = client.post(
         '/blog/User/register',
         data=json.dumps(dict(
@@ -41,7 +31,8 @@ def test_user_registration_existing_username(client, init_db):
     assert response.status_code == 400
     assert 'Username already exists' in data['message']
 
-def test_user_registration_missing_field(client, init_db):
+def test_user_registration_missing_field(client):
+    """Test user registration with missing fields."""
     response = client.post(
         '/blog/User/register',
         data=json.dumps(dict(

@@ -17,4 +17,6 @@ class UserSchema(Schema):
     username = fields.String(required=True, validate=validate.Length(min=1))
     email = fields.Email(required=True)
 
-
+class LoginSchema(Schema):
+    username = fields.Str(required=True, validate=validate.Length(min=1), error_messages={"required": "Username is required"})
+    password = fields.Str(required=True, validate=validate.Length(min=1), error_messages={"required": "Password is required"})
