@@ -35,3 +35,16 @@ class UserLogin(Resource):
             return {'token': token}, 200
         except UnauthorizedError as e:
             raise UnauthorizedError(e.description)
+
+
+@api.route('/logout')
+class UserLogout(Resource):
+    def post(self):
+        """User Logout"""
+        token = request.headers.get('Authorization')
+        if not token:
+            raise BadRequestError("Missing authorization token")
+        
+        token = token.replace("Bearer ", "")
+        UserService.logout_user(token)
+        return {'message': 'User logged out successfully'}, 200
