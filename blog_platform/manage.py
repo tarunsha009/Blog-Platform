@@ -8,12 +8,12 @@ from sqlalchemy_utils import create_database, database_exists
 
 from blog_platform.config import config_by_name
 from blog_platform.core.database.db import db
-from blog_platform.utils.error_handlers import register_error_handlers
+from flask_jwt_extended import JWTManager
 
 def make_app(config_name=None):
     config = config_by_name[config_name]
     app = Flask(config.APP_NAME)
-    # register_error_handlers(app)
+    jwt = JWTManager(app)
 
     db_connection_uri = f"{config.DB_DIALECT}://{config.DB_USER}:{config.DB_PASSWORD}@{config.DB_HOST}:{config.DB_PORT}/{config.DB_NAME}"
     app.config['SQLALCHEMY_DATABASE_URI'] = db_connection_uri
@@ -31,8 +31,8 @@ def make_app(config_name=None):
     app.config.from_object(config)
     app.register_blueprint(api_v1)
 
-    logging.basicConfig(level=logging.DEBUG)
-    logging.config.fileConfig(fname='logging.conf', disable_existing_loggers=False)
+    # logging.basicConfig(level=logging.DEBUG)
+    # logging.config.fileConfig(fname='logging.conf', disable_existing_loggers=False)
     logger = logging.getLogger(__name__)
     with app.app_context():
         # logging.config.fileConfig(app.config.get('LOG_CONFIG_PATH'))

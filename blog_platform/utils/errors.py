@@ -14,3 +14,6 @@ class NotFoundError(CustomError):
 
 class InternalServerError(CustomError):
     code = 500
+
+class UnauthorizedError(CustomError):
+    code = 401

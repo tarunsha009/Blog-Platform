@@ -1,0 +1,17 @@
+# .coveragerc
+
+[run]
+branch = True
+source = blog_platform
+
+[report]
+omit = 
+    blog_platform/__init__.py
+    blog_platform/conftest.py
+    blog_platform/manage.py
+    blog_platform/tests/*
+    blog_platform/migrations/*
+    blog_platform/core/database/models.py
+
+[html]
+directory = htmlcov

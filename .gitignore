@@ -162,6 +162,12 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Ignore Python cache files
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
 # C extensions
 *.so
 
@@ -184,6 +190,16 @@ share/python-wheels/
 *.egg
 MANIFEST
 .idea/
+
+# Ignore VS Code configuration files
+.vscode/
+
+# Ignore VS Code specific files
+.vscode/launch.json
+.vscode/settings.json
+.vscode/tasks.json
+.vscode/extensions.json
+
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

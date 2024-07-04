@@ -1,45 +1,37 @@
-from blog_platform.database_services.user_database_services import UserDatabaseServices
-from blog_platform.utils.errors import NotFoundError, InternalServerError
+from blog_platform.database_services.user_database_services import UserDBService
+from blog_platform.utils.errors import BadRequestError, NotFoundError, InternalServerError, UnauthorizedError
+from werkzeug.security import check_password_hash, generate_password_hash
+from flask_jwt_extended import create_access_token
 
+class UserService:
 
-class UserServices:
+    @staticmethod
+    def register_user(data):
+        username = data.get('username')
+        password = data.get('password')
+        email = data.get('email')
 
-    def get_all_users(self):
-        try:
-            user_database_service = UserDatabaseServices()
-            return user_database_service.get_all_users()
-        except Exception as err:
-            raise err
+        if not username or not password or not email:
+            raise BadRequestError("Username, password, and email are required")
 
-    def add_user(self, data):
-        try:
-            user_database_service = UserDatabaseServices()
-            return user_database_service.add_user(data)
-        except Exception as err:
-            raise err
+        if UserDBService.get_user_by_username(username):
+            raise BadRequestError("Username already exists")
 
-    def get_user_by_id(self, user_id):
-        user_database_service = UserDatabaseServices()
-        try:
-            user = user_database_service.get_user_by_id(user_id)
-            if user is None:
-                raise NotFoundError(message=f"User with ID {user_id} not found")
-            return user
-        except NotFoundError as e:
-            raise e
-        except Exception as err:
-            raise InternalServerError(message=str(err))
+        user = UserDBService.create_user(username, password, email)
+        return {"message": "User registered successfully", "user_id": user.id}, 201
 
-    def update_user(self, user_id, data):
-        try:
-            user_database_service = UserDatabaseServices()
-            return user_database_service.update_user(user_id, data)
-        except Exception as err:
-            raise err
+    @staticmethod
+    def login_user(username, password):
+        """Authenticate a user and generate a JWT token"""
+        user = UserDBService.get_user_by_username(username)
+        if user and check_password_hash(user.password, password):
+            # Create JWT token
+            access_token = create_access_token(identity={'username': username})
+            return access_token
+        else:
+            raise UnauthorizedError("Invalid username or password")
+        
 
-    def delete_user(self, user_id):
-        try:
-            user_database_service = UserDatabaseServices()
-            return user_database_service.delete_user(user_id)
-        except Exception as err:
-            raise err
+    @staticmethod
+    def generate_password_hash(password):
+        return generate_password_hash(password, method='scrypt')

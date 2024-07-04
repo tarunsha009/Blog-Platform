@@ -81,6 +81,8 @@ class BaseConfig(DatabaseConfig):
     LOG_CONFIG_PATH = 'C:\\Users\\Richa\\PycharmProjects\\Blog_Platform\\blog_platform\\logging.conf'
     RABBITMQ_URL = f"amqp://{RABBITMQ_USER}:{RABBITMQ_PASS}@rabbitmq-blog:5672"
     ERROR_INCLUDE_MESSAGE = False
+    JWT_SECRET_KEY = '6c158f33b56c884c3f8fc1acbf8adb0e3a7534f8206221224b4cbd65f1ee7628'  # Change this to a secure key for production
+    JWT_ACCESS_TOKEN_EXPIRES = 3600
 
 
 class ProductionConfig(BaseConfig):
