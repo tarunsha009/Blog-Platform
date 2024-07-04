@@ -2,6 +2,10 @@ from blog_platform.database_services.user_database_services import UserDBService
 from blog_platform.utils.errors import BadRequestError, NotFoundError, InternalServerError, UnauthorizedError
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_jwt_extended import create_access_token
+from blog_platform.utils.redis_client import redis_client
+
+# Define a global blacklist set
+blacklist = set()
 
 class UserService:
 
@@ -35,3 +39,12 @@ class UserService:
     @staticmethod
     def generate_password_hash(password):
         return generate_password_hash(password, method='scrypt')
+    
+    @staticmethod
+    @staticmethod
+    def logout_user(token):
+        """Invalidate the JWT token."""
+        if not token:
+            raise BadRequestError("Missing authorization token")
+        # Add the token to the blacklist in Redis
+        redis_client.set(token, '', ex=1)

@@ -1,4 +1,5 @@
 import os
+import secrets
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -83,6 +84,8 @@ class BaseConfig(DatabaseConfig):
     ERROR_INCLUDE_MESSAGE = False
     JWT_SECRET_KEY = '6c158f33b56c884c3f8fc1acbf8adb0e3a7534f8206221224b4cbd65f1ee7628'  # Change this to a secure key for production
     JWT_ACCESS_TOKEN_EXPIRES = 3600
+    REDIS_URL = "redis://localhost:6379/0"
+    SECRET_KEY = secrets.token_hex(32)
 
 
 class ProductionConfig(BaseConfig):
