@@ -1,17 +1,31 @@
-# .github/workflows/python-app.yml
 name: Python CI
 
 on:
   push:
     branches:
-      - master  # Trigger the workflow on pushes to the main branch
+      - master
   pull_request:
     branches:
-      - master  # Trigger the workflow on pull requests targeting the main branch
+      - master
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # Use the latest Ubuntu runner
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:14
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_DB: blog_platform_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: a
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
     - name: Checkout code
@@ -20,27 +34,39 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.12'  # Set the Python version to 3.10
+        python-version: '3.12'
 
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Run tests
+    - name: Wait for PostgreSQL to be ready
       run: |
-        pytest --cov=blog_platform --cov-report=xml --cov-report=html
+        until pg_isready -h localhost -p 5432 -U postgres; do
+          echo "Waiting for PostgreSQL to be ready..."
+          sleep 1
+        done
+
+    - name: Run tests
       env:
-        FLASK_ENV: testing  # Set environment variable for testing environment
+        FLASK_ENV: testing
+      run: |
+        pytest --timeout=60 --timeout-method=thread --maxfail=1 --tb=short --cov=blog_platform --cov-report=xml --cov-report=html
 
     - name: Upload coverage report
-      uses: codecov/codecov-action@v4.0.1
+      uses: codecov/codecov-action@v3
       with:
-        files: coverage.xml  # Upload the coverage report to Codecov
-        token: ${{ secrets.CODECOV_TOKEN }}  # Codecov token for uploading reports
+        files: coverage.xml
+        token: ${{ secrets.CODECOV_TOKEN }}
 
     - name: Generate coverage HTML report
       run: |
         mkdir -p coverage
         cp -r htmlcov/* coverage/
-      # Optional: Upload HTML coverage report artifacts
+        
+    - name: Upload coverage HTML report
+      uses: actions/upload-artifact@v3
+      with:
+        name: coverage-report
+        path: coverage/
