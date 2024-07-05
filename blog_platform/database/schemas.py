@@ -7,10 +7,12 @@ from blog_platform.database_services.user_database_services import UserDBService
 
 def create_schema():
     db.create_all()
+    print("Schema created.") 
 
 
 def drop_schema():
     db.drop_all()
+    print("Schema dropped.")
 
 
 class UserSchema(Schema):

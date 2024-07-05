@@ -78,7 +78,7 @@ def token_required(f):
 
 def is_public_endpoint():
     """Check if the current endpoint is public (no authentication required)."""
-    public_endpoints = ['login', 'logout']
+    public_endpoints = ['login', 'logout', 'register']
     return any(endpoint in request.endpoint for endpoint in public_endpoints)
 
 def main():

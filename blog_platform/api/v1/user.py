@@ -20,4 +20,4 @@ class UserRegister(Resource):
     @api.expect(user_registration_model, validate=True)
     def post(self):
         data = request.get_json()
-        return UserService.register_user(data)
+        return UserService.register_user(data), 201
