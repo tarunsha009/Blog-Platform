@@ -12,3 +12,4 @@ marshmallow-sqlalchemy
 redis~=5.0.7
 codecov~=2.1.12
 pytest-timeout
+pytest-mock
