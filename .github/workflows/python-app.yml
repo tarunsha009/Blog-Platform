@@ -45,7 +45,7 @@ jobs:
     - name: Run tests
       env:
         FLASK_ENV: testing  # Set environment variable for testing environment
-        DATABASE_URL: postgres://postgres:a@localhost:5432/postgres  # Set the database URL for testing
+        DATABASE_URL: postgres://postgres:a@localhost:5432/blog_platform_test  # Set the database URL for testing
       run: |
         pytest --cov=blog_platform --cov-report=xml --cov-report=html
 
