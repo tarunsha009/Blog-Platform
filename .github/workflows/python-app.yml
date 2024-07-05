@@ -19,10 +19,10 @@ jobs:
         ports:
           - 5432:5432  # Expose port 5432 for PostgreSQL
         env:
-          POSTGRES_DB: postgres  # Set the default database name
+          POSTGRES_DB: blog_platform_test  # Set the default database name
           POSTGRES_USER: postgres  # Set the PostgreSQL user
           POSTGRES_PASSWORD: a  # Set the PostgreSQL password
-        options: >  # Optional: Configure PostgreSQL to listen on all IPs
+        options: >-  # Using >- instead of > to remove trailing newlines
           --health-cmd "pg_isready -U postgres"
           --health-interval 10s
           --health-timeout 5s
@@ -50,13 +50,4 @@ jobs:
         pytest --cov=blog_platform --cov-report=xml --cov-report=html
 
     - name: Upload coverage report
-      uses: codecov/codecov-action@v3
-      with:
-        files: coverage.xml  # Upload the coverage report to Codecov
-        token: ${{ secrets.CODECOV_TOKEN }}  # Codecov token for uploading reports
-
-    - name: Generate coverage HTML report
-      run: |
-        mkdir -p coverage
-        cp -r htmlcov/* coverage/
-      # Optional: Upload HTML coverage report artifacts
+      uses: codec
