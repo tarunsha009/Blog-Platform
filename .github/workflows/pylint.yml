@@ -20,7 +20,7 @@ jobs:
           pip install pylint pylint-json2html
       - name: Analyse the code with pylint
         run: |
-          pylint $(git ls-files '*.py') -f json -o pylint_report.json || true
+          pylint $(git ls-files '*.py') -f json > pylint_report.json || true
       - name: Convert Pylint report to HTML
         run: |
           pylint-json2html -f jsonextended -o pylint_report.html pylint_report.json
