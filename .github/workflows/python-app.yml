@@ -52,7 +52,7 @@ jobs:
       env:
         FLASK_ENV: testing
       run: |
-        pytest --timeout=60 --timeout-method=thread --maxfail=1 --tb=short --cov=blog_platform --cov-report=xml --cov-report=html
+        pytest
 
     - name: Upload coverage report
       uses: codecov/codecov-action@v3
