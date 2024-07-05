@@ -6,9 +6,9 @@ def test_user_registration(client):
     response = client.post(
         '/blog/User/register',
         data=json.dumps(dict(
-            username='testuser',
-            password='testpassword',
-            email='test@example.com'
+            username='testuser1',
+            password='testpassword1',
+            email='test1@example.com'
         )),
         content_type='application/json'
     )
