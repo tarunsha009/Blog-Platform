@@ -12,21 +12,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    services:
-      postgres:
-        image: postgres:14
-        ports:
-          - 5432:5432
-        env:
-          POSTGRES_DB: blog_platform_test
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: a
-        options: >-
-          --health-cmd "pg_isready -U postgres"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
@@ -41,18 +26,12 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Wait for PostgreSQL to be ready
-      run: |
-        until pg_isready -h localhost -p 5432 -U postgres; do
-          echo "Waiting for PostgreSQL to be ready..."
-          sleep 1
-        done
-
     - name: Run tests
       env:
         FLASK_ENV: testing
       run: |
-        pytest
+        # Run the tests and generate the coverage report
+        pytest --cov=blog_platform --cov-report=xml --cov-report=html
 
     - name: Upload coverage report
       uses: codecov/codecov-action@v3
@@ -60,13 +39,8 @@ jobs:
         files: coverage.xml
         token: ${{ secrets.CODECOV_TOKEN }}
 
-    - name: Generate coverage HTML report
-      run: |
-        mkdir -p coverage
-        cp -r htmlcov/* coverage/
-        
     - name: Upload coverage HTML report
       uses: actions/upload-artifact@v3
       with:
         name: coverage-report
-        path: coverage/
+        path: htmlcov/
