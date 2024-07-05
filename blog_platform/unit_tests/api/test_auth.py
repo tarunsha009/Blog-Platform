@@ -11,6 +11,7 @@ def test_user_login_success(client, new_user):
     assert response.status_code == 200
     assert 'token' in response.json
 
+
 # def test_user_login_failure_invalid_credentials(client):
 #     """Test user login with invalid credentials."""
 #     login_data = {
