@@ -34,12 +34,10 @@ jobs:
       - name: Convert Pylint report to HTML
         run: |
           pylint-json2html -f jsonextended -o pylint_report.html pylint_report_converted.json
-      - name: Upload Pylint report as artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: pylint-report
-          path: pylint_report.html
       - name: Add HTML report to GitHub summary
         run: |
           echo '## Pylint Report' >> $GITHUB_STEP_SUMMARY
+          echo '<details><summary>View Pylint Report</summary>' >> $GITHUB_STEP_SUMMARY
+          echo '<!DOCTYPE html><html><body>' >> $GITHUB_STEP_SUMMARY
           cat pylint_report.html >> $GITHUB_STEP_SUMMARY
+          echo '</body></html></details>' >> $GITHUB_STEP_SUMMARY
