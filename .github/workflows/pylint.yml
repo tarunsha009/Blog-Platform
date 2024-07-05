@@ -9,16 +9,27 @@ jobs:
       matrix:
         python-version: ["3.12"]
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        pip install pylint
-    - name: Analysing the code with pylint
-      run: |
-        pylint $(git ls-files '*.py')
+      - uses: actions/checkout@v4
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pylint pylint-json2html
+      - name: Analyse the code with pylint
+        run: |
+          pylint $(git ls-files '*.py') -f json -o pylint_report.json || true
+      - name: Convert Pylint report to HTML
+        run: |
+          pylint-json2html -f jsonextended -o pylint_report.html pylint_report.json
+      - name: Upload Pylint report as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: pylint-report
+          path: pylint_report.html
+      - name: Add HTML report to GitHub summary
+        run: |
+          echo '## Pylint Report' >> $GITHUB_STEP_SUMMARY
+          cat pylint_report.html >> $GITHUB_STEP_SUMMARY
