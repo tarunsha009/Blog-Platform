@@ -21,9 +21,19 @@ jobs:
       - name: Analyse the code with pylint
         run: |
           pylint $(git ls-files '*.py') -f json > pylint_report.json || true
+      - name: Convert Pylint JSON format
+        run: |
+          echo 'import json' > convert_pylint_json.py
+          echo 'with open("pylint_report.json") as f:' >> convert_pylint_json.py
+          echo '    data = json.load(f)' >> convert_pylint_json.py
+          echo '    if isinstance(data, list):' >> convert_pylint_json.py
+          echo '        data = {"messages": data}' >> convert_pylint_json.py
+          echo 'with open("pylint_report_converted.json", "w") as f:' >> convert_pylint_json.py
+          echo '    json.dump(data, f)' >> convert_pylint_json.py
+          python convert_pylint_json.py
       - name: Convert Pylint report to HTML
         run: |
-          pylint-json2html -f jsonextended -o pylint_report.html pylint_report.json
+          pylint-json2html -f jsonextended -o pylint_report.html pylint_report_converted.json
       - name: Upload Pylint report as artifact
         uses: actions/upload-artifact@v3
         with:
