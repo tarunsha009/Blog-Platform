@@ -1,6 +1,6 @@
 # blog_platform/api/v1/error_handlers.py
 from flask import jsonify
-from blog_platform.utils.errors import BadRequestError, NotFoundError, InternalServerError, UnauthorizedError
+from blog_platform.utils.errors import BadRequestError, NotFoundError, InternalServerError, UnauthorizedError, ValidationError
 
 def register_error_handlers(api):
     @api.errorhandler(BadRequestError)
@@ -27,3 +27,8 @@ def register_error_handlers(api):
     def handle_general_exception(error):
         response = {'message': 'Internal Server Error'}
         return response, 500
+    
+    @api.errorhandler(ValidationError)
+    def handle_validation_error(error):
+        response = {'message': error.messages}
+        return response, 400

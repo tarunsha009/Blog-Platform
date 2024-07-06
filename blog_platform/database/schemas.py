@@ -22,3 +22,12 @@ class UserSchema(Schema):
 class LoginSchema(Schema):
     username = fields.Str(required=True, validate=validate.Length(min=1), error_messages={"required": "Username is required"})
     password = fields.Str(required=True, validate=validate.Length(min=1), error_messages={"required": "Password is required"})
+
+
+class BlogPostSchema(Schema):
+    title = fields.Str(required=True, validate=validate.Length(min=1), error_messages={"required": "Title is required"})
+    content = fields.Str(required=True, validate=validate.Length(min=1), error_messages={"required": "Content is required"})
+    author_id = fields.Int(required=True, error_messages={"required": "Author ID is required"})
+
+    class Meta:
+        fields = ('title', 'content', 'author_id')

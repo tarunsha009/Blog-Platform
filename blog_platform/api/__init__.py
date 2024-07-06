@@ -2,7 +2,7 @@
 from flask import Blueprint
 from flask_restx import Api
 from blog_platform.api.v1.user import api as v1_user
-from blog_platform.api.v1.post import post_ns as v1_post
+from blog_platform.api.v1.blog_post import api as v1_post
 from blog_platform.api.v1.auth import api as v1_auth
 from blog_platform.utils.error_handlers import register_error_handlers
 

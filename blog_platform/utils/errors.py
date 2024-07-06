@@ -17,3 +17,6 @@ class InternalServerError(CustomError):
 
 class UnauthorizedError(CustomError):
     code = 401
+
+class ValidationError(CustomError):
+    code = 422
