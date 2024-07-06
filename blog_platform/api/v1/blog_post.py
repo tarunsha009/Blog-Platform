@@ -2,9 +2,9 @@ from flask_restx import Resource, Namespace, fields
 from flask import request
 from blog_platform.database.schemas import BlogPostSchema
 from blog_platform.services.blog_post_service import BlogPostService
-from marshmallow.exceptions import ValidationError
+from marshmallow import ValidationError
 
-from blog_platform.utils.errors import InternalServerError
+from blog_platform.utils.errors import BadRequestError, InternalServerError
 
 api = Namespace("BlogPost", description="Blog Post operations")
 
@@ -29,7 +29,7 @@ class BlogPostCreate(Resource):
             return blog_post_schema.dump(new_post), 201  # Return the newly created post
             
         except ValidationError as err:
-            return ValidationError(err.messages)  # Return validation errors if any
+            return {'message': err.messages}, 422  # Return validation errors if any
         except Exception as e:
             # Handle unexpected errors
             raise InternalServerError("An unexpected error occurred while creating the blog post.")

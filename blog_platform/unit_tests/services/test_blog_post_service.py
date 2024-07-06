@@ -1,36 +1,107 @@
 # blog_platform/unit_tests/services/test_blog_post_service.py
+
 import pytest
+from unittest.mock import patch, Mock
 from blog_platform.services.blog_post_service import BlogPostService
-from blog_platform.utils.errors import NotFoundError, ValidationError
+from blog_platform.utils.errors import NotFoundError
 from blog_platform.core.database.models import BlogPost
 
-@pytest.fixture
-def blog_post_data():
-    return {'title': 'Test Post', 'content': 'This is a test post', 'author_id': 1}
+# Test for `create_blog_post` method
+@patch('blog_platform.services.blog_post_service.BlogPostDBService.create_blog_post')
+def test_create_blog_post_success(mock_create_blog_post):
+    # Mock DB service
+    mock_create_blog_post.return_value = BlogPost(id=1, title='Test Post', content='This is a test post', author_id=1)
+    
+    data = {'title': 'Test Post', 'content': 'This is a test post', 'author_id': 1}
+    result = BlogPostService.create_blog_post(data)
+    
+    assert result.title == 'Test Post'
+    assert result.content == 'This is a test post'
+    assert result.author_id == 1
+    mock_create_blog_post.assert_called_once_with(
+        title='Test Post', content='This is a test post', author_id=1
+    )
 
-def test_create_blog_post(blog_post_data):
-    post = BlogPostService.create_blog_post(blog_post_data)
-    assert post.title == 'Test Post'
-    assert post.content == 'This is a test post'
-    assert post.author_id == 1
+# Test for `get_blog_post_by_id` method
+@patch('blog_platform.services.blog_post_service.BlogPostDBService.get_blog_post_by_id')
+def test_get_blog_post_by_id_success(mock_get_blog_post_by_id):
+    mock_get_blog_post_by_id.return_value = BlogPost(id=1, title='Test Post', content='This is a test post', author_id=1)
+    
+    result = BlogPostService.get_blog_post_by_id(1)
+    
+    assert result.title == 'Test Post'
+    assert result.content == 'This is a test post'
+    assert result.author_id == 1
+    mock_get_blog_post_by_id.assert_called_once_with(1)
 
-def test_get_blog_post_by_id(blog_post_data):
-    post = BlogPostService.create_blog_post(blog_post_data)
-    fetched_post = BlogPostService.get_blog_post_by_id(post.id)
-    assert fetched_post.id == post.id
+@patch('blog_platform.services.blog_post_service.BlogPostDBService.get_blog_post_by_id')
+def test_get_blog_post_by_id_not_found(mock_get_blog_post_by_id):
+    mock_get_blog_post_by_id.return_value = None
+    
+    with pytest.raises(NotFoundError) as exc_info:
+        BlogPostService.get_blog_post_by_id(999)
+    
+    assert str(exc_info.value) == '404 Not Found: Blog post not found'
+    mock_get_blog_post_by_id.assert_called_once_with(999)
 
-def test_get_blog_post_by_id_not_found():
-    with pytest.raises(NotFoundError):
-        BlogPostService.get_blog_post_by_id(9999)  # Invalid ID
+# Test for `get_all_blog_posts` method
+@patch('blog_platform.services.blog_post_service.BlogPostDBService.get_all_blog_posts')
+def test_get_all_blog_posts_success(mock_get_all_blog_posts):
+    mock_get_all_blog_posts.return_value = [BlogPost(id=1, title='Test Post', content='This is a test post', author_id=1)]
+    
+    result = BlogPostService.get_all_blog_posts()
+    
+    assert len(result) == 1
+    assert result[0].title == 'Test Post'
+    assert result[0].content == 'This is a test post'
+    assert result[0].author_id == 1
+    mock_get_all_blog_posts.assert_called_once()
 
-def test_update_blog_post(blog_post_data):
-    post = BlogPostService.create_blog_post(blog_post_data)
-    update_data = {'title': 'Updated Title'}
-    updated_post = BlogPostService.update_blog_post(post.id, update_data)
-    assert updated_post.title == 'Updated Title'
+# Test for `update_blog_post` method
+@patch('blog_platform.services.blog_post_service.BlogPostDBService.update_blog_post')
+def test_update_blog_post_success(mock_update_blog_post):
+    mock_update_blog_post.return_value = BlogPost(id=1, title='Updated Title', content='Updated content', author_id=1)
+    
+    data = {'title': 'Updated Title', 'content': 'Updated content'}
+    result = BlogPostService.update_blog_post(1, data)
+    
+    assert result.title == 'Updated Title'
+    assert result.content == 'Updated content'
+    mock_update_blog_post.assert_called_once_with(
+        1, title='Updated Title', content='Updated content'
+    )
 
-def test_delete_blog_post(blog_post_data):
-    post = BlogPostService.create_blog_post(blog_post_data)
-    BlogPostService.delete_blog_post(post.id)
-    with pytest.raises(NotFoundError):
-        BlogPostService.get_blog_post_by_id(post.id)
+@patch('blog_platform.services.blog_post_service.BlogPostDBService.update_blog_post')
+def test_update_blog_post_not_found(mock_update_blog_post):
+    mock_update_blog_post.return_value = None
+    
+    data = {'title': 'Updated Title', 'content': 'Updated content'}
+    with pytest.raises(NotFoundError) as exc_info:
+        BlogPostService.update_blog_post(999, data)
+    
+    assert str(exc_info.value) == '404 Not Found: Blog post not found'
+    mock_update_blog_post.assert_called_once_with(
+        999, title='Updated Title', content='Updated content'
+    )
+
+# Test for `delete_blog_post` method
+@patch('blog_platform.services.blog_post_service.BlogPostDBService.delete_blog_post')
+def test_delete_blog_post_success(mock_delete_blog_post):
+    mock_delete_blog_post.return_value = BlogPost(id=1, title='Test Post', content='This is a test post', author_id=1)
+    
+    result = BlogPostService.delete_blog_post(1)
+    
+    assert result.title == 'Test Post'
+    assert result.content == 'This is a test post'
+    assert result.author_id == 1
+    mock_delete_blog_post.assert_called_once_with(1)
+
+@patch('blog_platform.services.blog_post_service.BlogPostDBService.delete_blog_post')
+def test_delete_blog_post_not_found(mock_delete_blog_post):
+    mock_delete_blog_post.return_value = None
+    
+    with pytest.raises(NotFoundError) as exc_info:
+        BlogPostService.delete_blog_post(999)
+    
+    assert str(exc_info.value) == '404 Not Found: Blog post not found'
+    mock_delete_blog_post.assert_called_once_with(999)

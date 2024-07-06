@@ -38,22 +38,22 @@ def make_app(config_name=None):
     with app.app_context():
         db.create_all()
 
-    # @app.before_request
-    # def handle_request():
-    #     """Ensure the JWT token is valid for protected routes."""
-    #     if request.endpoint and not is_public_endpoint():
-    #         if not request.headers.get('Authorization'):
-    #             raise UnauthorizedError("Missing authorization token")
+    @app.before_request
+    def handle_request():
+        """Ensure the JWT token is valid for protected routes."""
+        if request.endpoint and not is_public_endpoint():
+            if not request.headers.get('Authorization'):
+                raise UnauthorizedError("Missing authorization token")
 
-    #         token = request.headers.get('Authorization').split(' ')[1]
-    #         try:
-    #             decode_token(token)
-    #         except Exception as e:
-    #             raise UnauthorizedError('Invalid token')
+            token = request.headers.get('Authorization').split(' ')[1]
+            try:
+                decode_token(token)
+            except Exception as e:
+                raise UnauthorizedError('Invalid token')
             
-    #         # Check if the token is blacklisted
-    #         if redis_client.get(token):
-    #             raise UnauthorizedError("Token is blacklisted")
+            # Check if the token is blacklisted
+            if redis_client.get(token):
+                raise UnauthorizedError("Token is blacklisted")
 
     # Define a protected route for testing
     @app.route('/protected', methods=['GET'])
