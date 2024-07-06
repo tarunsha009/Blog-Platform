@@ -38,29 +38,39 @@ def blog_post_return_data():
         'updated_at': '2024-07-06T17:16:29.788725'
     }
 
-@patch('blog_platform.services.blog_post_service.BlogPostService.create_blog_post')
-def test_create_blog_post_success(mock_create_blog_post, client, blog_post_data, blog_post_return_data):
-    # Create a mock BlogPost object with necessary attributes
-    mock_blog_post = MagicMock()
-    mock_blog_post.id = blog_post_return_data['id']
-    mock_blog_post.title = blog_post_return_data['title']
-    mock_blog_post.content = blog_post_return_data['content']
-    mock_blog_post.author_id = blog_post_return_data['author_id']
-    mock_blog_post.created_at = blog_post_return_data['created_at']
-    mock_blog_post.updated_at = blog_post_return_data['updated_at']
+def test_create_blog_post_success(mocker, client):
+    # Define the input data and expected response data
+    blog_post_data = {
+        'title': 'Test Post',
+        'content': 'This is a test post',
+        'author_id': 1
+    }
+    now = datetime.now(timezone.utc)
 
-    # Set the mock return value to be the mock BlogPost object
-    mock_create_blog_post.return_value = mock_blog_post
+    blog_post_return_data = {
+        'id': 1,
+        'title': 'Test Post',
+        'content': 'This is a test post',
+        'author_id': 1,
+        'created_at': now,
+        'updated_at': now
+    }
 
+    # Mock the BlogPostService.create_blog_post method
+    mock_create_blog_post = mocker.patch('blog_platform.services.blog_post_service.BlogPostService.create_blog_post', return_value=MagicMock(**blog_post_return_data))
+
+    # Send a POST request to the endpoint
     response = client.post('/blog/posts', json=blog_post_data)
     
+    # Check the response status and data
     assert response.status_code == 201
     assert response.json['title'] == blog_post_return_data['title']
     assert response.json['content'] == blog_post_return_data['content']
     assert response.json['author_id'] == blog_post_return_data['author_id']
     assert response.json['id'] == blog_post_return_data['id']
-    assert response.json['created_at'] == blog_post_return_data['created_at']
-    assert response.json['updated_at'] == blog_post_return_data['updated_at']
+    assert response.json['created_at'] == blog_post_return_data['created_at'].isoformat()
+    assert response.json['updated_at'] == blog_post_return_data['updated_at'].isoformat()
+    mock_create_blog_post.assert_called_once_with(blog_post_data)
 
 @patch('blog_platform.api.v1.blog_post.BlogPostService.create_blog_post')
 def test_create_blog_post_validation_error(mock_create_blog_post, client):

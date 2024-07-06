@@ -28,8 +28,8 @@ class BlogPostCreate(Resource):
                 'title': new_post.title,
                 'content': new_post.content,
                 'author_id': new_post.author_id,
-                'created_at': new_post.created_at.isoformat(),
-                'updated_at': new_post.updated_at.isoformat()
+                'created_at': new_post.created_at.isoformat() if new_post.created_at else None,
+                'updated_at': new_post.updated_at.isoformat() if new_post.updated_at else None
             }
             return response, 201
         except ValidationError as err:
