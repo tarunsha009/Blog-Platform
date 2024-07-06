@@ -1,7 +1,7 @@
 # blog_platform/unit_tests/services/test_blog_post_service.py
 
 import pytest
-from unittest.mock import patch, Mock
+from unittest.mock import patch
 from blog_platform.services.blog_post_service import BlogPostService
 from blog_platform.utils.errors import NotFoundError
 from blog_platform.core.database.models import BlogPost

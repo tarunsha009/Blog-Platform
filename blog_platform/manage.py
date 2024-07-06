@@ -1,6 +1,4 @@
 from functools import wraps
-import logging
-import logging.config
 
 from blog_platform.api import api_v1
 from flask import Flask, jsonify, request
@@ -15,7 +13,7 @@ from blog_platform.utils.jwt_utils import setup_jwt
 from blog_platform.utils.redis_client import redis_client  # Import the Redis client
 
 
-def make_app(config_name=None):
+def make_app(config_name='Dev'):
     config = config_by_name[config_name]
     app = Flask(config.APP_NAME)
     setup_jwt(app)
