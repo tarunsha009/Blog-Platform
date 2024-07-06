@@ -1,0 +1,23 @@
+name: Enforce Branch Naming Convention
+
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  check-branch-name:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Enforce branch naming convention
+        run: |
+          branch_name=${GITHUB_REF#refs/heads/}
+
+          if [[ ! "$branch_name" =~ ^usr/[a-zA-Z0-9_-]+/[a-zA-Z0-9_-]+-[0-9]+$ ]]; then
+            echo "Error: Branch name '$branch_name' does not follow the convention 'usr/<name>/<somename>-<issue_number>'"
+            exit 1
+          fi
