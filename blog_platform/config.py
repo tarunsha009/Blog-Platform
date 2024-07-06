@@ -5,14 +5,14 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class FlaskConfig:
-    ENV = 'production'
+    ENV = "production"
     DEBUG = False
     TESTING = False
     PROPAGATE_EXCEPTIONS = None
     TRAP_HTTP_EXCEPTIONS = True
     TRAP_BAD_REQUEST_ERRORS = None
     SECRET_KEY = None
-    SESSION_COOKIE_NAME = 'session'  # Replace with your session cookie name
+    SESSION_COOKIE_NAME = "session"  # Replace with your session cookie name
     SESSION_COOKIE_DOMAIN = None
     SESSION_COOKIE_PATH = None
     SESSION_COOKIE_HTTPONLY = True
@@ -23,8 +23,8 @@ class FlaskConfig:
     USE_X_SENDFILE = False
     SEND_FILE_MAX_AGE_DEFAULT = None  # 12 hours (in seconds)
     SERVER_NAME = None
-    APPLICATION_ROOT = '/'
-    PREFERRED_URL_SCHEME = 'http'
+    APPLICATION_ROOT = "/"
+    PREFERRED_URL_SCHEME = "http"
     MAX_CONTENT_LENGTH = None  # 16 * 1024 * 1024  # 16 MB
     TEMPLATES_AUTO_RELOAD = False
     EXPLAIN_TEMPLATE_LOADING = False
@@ -32,13 +32,13 @@ class FlaskConfig:
     JSON_AS_ASCII = True
     JSON_SORT_KEYS = True
     JSONIFY_PRETTYPRINT_REGULAR = True
-    JSONIFY_MIMETYPE = 'application/json'
+    JSONIFY_MIMETYPE = "application/json"
 
 
 class FlaskRestxConfig(FlaskConfig):
     RESTX_JSON = {}  # JSON encoder/decoder
     RESTX_VALIDATE = False  # Enable request validation
-    RESTX_MASK_HEADER = 'X-Fields'  # Header for request masking
+    RESTX_MASK_HEADER = "X-Fields"  # Header for request masking
     RESTX_MASK_SWAGGER = True  # Mask sensitive data in Swagger UI
     RESTX_INCLUDE_ALL_MODELS = False  # Include all models in Swagger UI
     BUNDLE_ERRORS = True  # Bundle validation errors
@@ -56,33 +56,34 @@ class FlaskRestxConfig(FlaskConfig):
 
 
 class DatabaseConfig:
-    DB_DIALECT = 'postgresql'
-    DB_HOST = 'localhost'
+    DB_DIALECT = "postgresql"
+    DB_HOST = "localhost"
     DB_PORT = 5432
-    DB_USER = 'postgres'
-    DB_PASSWORD = 'a'
-    DB_NAME = 'blog_platform'
-    DB_DATA_DIR = '/pgdata/pg16'
+    DB_USER = "postgres"
+    DB_PASSWORD = "a"
+    DB_NAME = "blog_platform"
+    DB_DATA_DIR = "/pgdata/pg16"
 
 
 class BaseConfig(DatabaseConfig):
-    APP_NAME = 'Blog Platform'
+    APP_NAME = "Blog Platform"
     DEBUG = False
 
-    RESTX_SWAGGER_UI_DOC_EXPANSION = 'list'
+    RESTX_SWAGGER_UI_DOC_EXPANSION = "list"
     RESTX_VALIDATE = True
     RESTX_MASK_SWAGGER = False
     RESTX_ERROR_404_HELP = False
     SWAGGER_UI_JSONEDITOR = False
-    ENABLED_MODULES = (
-        'v1'
+    ENABLED_MODULES = "v1"
+    RABBITMQ_USER = "guest"
+    RABBITMQ_PASS = "guest"
+    LOG_CONFIG_PATH = (
+        "C:\\Users\\Richa\\PycharmProjects\\Blog_Platform\\blog_platform\\logging.conf"
     )
-    RABBITMQ_USER = 'guest'
-    RABBITMQ_PASS = 'guest'
-    LOG_CONFIG_PATH = 'C:\\Users\\Richa\\PycharmProjects\\Blog_Platform\\blog_platform\\logging.conf'
     RABBITMQ_URL = f"amqp://{RABBITMQ_USER}:{RABBITMQ_PASS}@rabbitmq-blog:5672"
     ERROR_INCLUDE_MESSAGE = False
-    JWT_SECRET_KEY = '6c158f33b56c884c3f8fc1acbf8adb0e3a7534f8206221224b4cbd65f1ee7628'  # Change this to a secure key for production
+    # Change this to a secure key for production
+    JWT_SECRET_KEY = "6c158f33b56c884c3f8fc1acbf8adb0e3a7534f8206221224b4cbd65f1ee7628"
     JWT_ACCESS_TOKEN_EXPIRES = 3600
     REDIS_URL = "redis://localhost:6379/0"
     SECRET_KEY = secrets.token_hex(32)
@@ -90,7 +91,7 @@ class BaseConfig(DatabaseConfig):
 
 class ProductionConfig(BaseConfig):
     DEBUG = False
-    ENV = 'prod'
+    ENV = "prod"
 
 
 class StagingConfig(BaseConfig):
@@ -99,14 +100,18 @@ class StagingConfig(BaseConfig):
 
 
 class DevelopmentConfig(BaseConfig):
-    ENV = 'development'
+    ENV = "development"
     DEBUG = True
 
 
 class TestingConfig(BaseConfig):
-    ENV = 'testing'
+    ENV = "testing"
     DEBUG = True
-    DB_NAME = 'blog_platform_test'
+    DB_NAME = "blog_platform_test"
 
 
-config_by_name = {'dev': DevelopmentConfig, 'testing': TestingConfig, 'prod': ProductionConfig}
+config_by_name = {
+    "dev": DevelopmentConfig,
+    "testing": TestingConfig,
+    "prod": ProductionConfig,
+}

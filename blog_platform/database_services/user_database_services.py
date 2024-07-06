@@ -13,8 +13,10 @@ class UserDBService:
 
     @staticmethod
     def create_user(username, password, email):
-        hashed_password = generate_password_hash(password, method='scrypt')
-        new_user = User(username=username, password=hashed_password, email=email)
+        hashed_password = generate_password_hash(password, method="scrypt")
+        new_user = User(username=username,
+                        password=hashed_password,
+                        email=email)
         db.session.add(new_user)
         db.session.commit()
         return new_user

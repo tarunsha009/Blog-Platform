@@ -1,15 +1,12 @@
 from blog_platform.core.database.db import db
 from blog_platform.core.database.models import BlogPost
 
+
 class BlogPostDBService:
 
     @staticmethod
     def create_blog_post(title, content, author_id):
-        new_post = BlogPost(
-            title=title,
-            content=content,
-            author_id=author_id
-        )
+        new_post = BlogPost(title=title, content=content, author_id=author_id)
         db.session.add(new_post)
         db.session.commit()
         return new_post
