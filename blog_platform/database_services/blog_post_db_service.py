@@ -1,4 +1,3 @@
-# blog_platform/services/blog_post_db_service.py
 from blog_platform.core.database.db import db
 from blog_platform.core.database.models import BlogPost
 

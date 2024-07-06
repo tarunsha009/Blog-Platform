@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, timezone
 from blog_platform.core.database.db import db
 
 
@@ -14,6 +14,7 @@ class BlogPost(db.Model):
     title = db.Column(db.String(255), nullable=False)
     content = db.Column(db.Text, nullable=False)
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
 
     author = db.relationship('User', backref=db.backref('posts', lazy=True))

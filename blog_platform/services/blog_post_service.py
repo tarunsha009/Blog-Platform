@@ -1,5 +1,3 @@
-# blog_platform/services/blog_post_service.py
-
 from blog_platform.database_services.blog_post_db_service import BlogPostDBService
 from blog_platform.utils.errors import NotFoundError
 
@@ -7,12 +5,13 @@ class BlogPostService:
 
     @staticmethod
     def create_blog_post(data):
-        # Assuming `data` is already validated by the API layer
+        print(f"Received data for blog post creation: {data}")
         new_post = BlogPostDBService.create_blog_post(
             title=data['title'],
             content=data['content'],
             author_id=data['author_id']
         )
+        print(f"Created new post: {new_post}")
         return new_post
 
     @staticmethod
@@ -28,7 +27,6 @@ class BlogPostService:
 
     @staticmethod
     def update_blog_post(post_id, data):
-        # Assuming `data` is already validated by the API layer
         updated_post = BlogPostDBService.update_blog_post(
             post_id,
             title=data.get('title'),
