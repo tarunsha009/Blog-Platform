@@ -1,0 +1,53 @@
+[MASTER]
+# A comma-separated list of package or module names to be ignored by pylint.
+ignore=tests,migrations
+
+# Define the file patterns to be included in the linting process.
+include-ids=y
+
+# Specify the plugins to load for additional checks.
+load-plugins=pylint_django,pylint_flask
+
+[MESSAGES CONTROL]
+# Disable specific linting messages based on your project needs.
+disable=C0111,  # Missing docstrings
+        R0903,  # Too-few-public-methods (for simple data classes)
+        R0201,  # Method could be a function (for methods that don’t modify the class state)
+        E1101,  # Instance has no member (for cases with dynamic attributes)
+        E1120,  # Too many arguments (for methods that need more flexibility)
+        E0401   # Unable to import module (for imports that might not be present in all environments)
+
+[FORMAT]
+# Maximum number of characters on a single line.
+max-line-length=100
+
+[DESIGN]
+# Maximum number of arguments for function/methods.
+max-args=5
+
+# Maximum number of attributes in a class.
+max-attributes=10
+
+# Maximum number of public methods in a class.
+max-public-methods=10
+
+# Maximum number of statements in a function.
+max-statements=50
+
+# Maximum number of branches in a function.
+max-branches=12
+
+[IMPORTS]
+# List of modules or packages to be imported.
+known-third-party=pylint_flask,pylint_django
+
+[EXCEPTIONS]
+# List of exceptions that can be caught.
+overgeneral-exceptions=Exception
+
+[CLASSES]
+# Limit the number of methods allowed in a class.
+max-bodies=20
+
+[REPORTS]
+# Disable the r

@@ -9,14 +9,19 @@ from blog_platform.utils.errors import NotFoundError, InternalServerError
 user_schema = UserSchema()
 api = Namespace("User", description="User operations")
 
-user_registration_model = api.model('UserRegistration', {
-    'username': fields.String(required=True, description='The username'),
-    'password': fields.String(required=True, description='The password'),
-    'email': fields.String(required=True, description='The email address')
-})
+user_registration_model = api.model(
+    "UserRegistration",
+    {
+        "username": fields.String(required=True, description="The username"),
+        "password": fields.String(required=True, description="The password"),
+        "email": fields.String(required=True, description="The email address"),
+    },
+)
 
-@api.route('/register')
+
+@api.route("/register")
 class UserRegister(Resource):
+
     @api.expect(user_registration_model, validate=True)
     def post(self):
         data = request.get_json()
