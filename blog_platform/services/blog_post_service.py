@@ -39,3 +39,14 @@ class BlogPostService:
         if not deleted_post:
             raise NotFoundError("Blog post not found")
         return deleted_post
+    
+    @staticmethod
+    def get_blog_posts_by_user_id(user_id):
+        """
+        Retrieve all blog posts for a specific user.
+        Args:
+            user_id (int): The ID of the user.
+        Returns:
+            List[BlogPost]: A list of BlogPost objects.
+        """
+        return BlogPostDBService.get_blog_posts_by_user_id(user_id)

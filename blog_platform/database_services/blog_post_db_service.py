@@ -37,3 +37,14 @@ class BlogPostDBService:
             db.session.delete(post)
             db.session.commit()
         return post
+    
+    @staticmethod
+    def get_blog_posts_by_user_id(user_id):
+        """
+        Retrieve all blog posts for a specific user.
+        Args:
+            user_id (int): The ID of the user.
+        Returns:
+            List[BlogPost]: A list of BlogPost objects.
+        """
+        return BlogPost.query.filter_by(author_id=user_id).all()
