@@ -99,11 +99,3 @@ def test_create_blog_post_validation_error(mock_create_blog_post, client):
     assert "Shorter than minimum length 1." in validation_errors["title"]
 
 
-# @patch('blog_platform.api.v1.blog_post.BlogPostService.create_blog_post')
-# def test_create_blog_post_service_error(mock_create_blog_post, client, blog_post_data):
-#     mock_create_blog_post.side_effect = Exception("Service error")
-
-#     response = client.post('/blog/posts', json=blog_post_data)
-
-#     assert response.status_code == 500
-#     assert response.json['message'] == 'Internal Server Error'
