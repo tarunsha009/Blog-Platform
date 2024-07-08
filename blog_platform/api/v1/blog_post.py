@@ -1,9 +1,11 @@
+from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_restx import Resource, Namespace, fields
 from flask import request
 from blog_platform.database.schemas import BlogPostSchema
 from blog_platform.services.blog_post_service import BlogPostService
 from marshmallow import ValidationError
-from blog_platform.utils.errors import BadRequestError, InternalServerError
+from blog_platform.services.user_services import UserService
+from blog_platform.utils.errors import BadRequestError, InternalServerError, NotFoundError
 
 api = Namespace("BlogPost", description="Blog Post operations")
 
@@ -52,3 +54,28 @@ class BlogPostCreate(Resource):
         except Exception as e:
             raise InternalServerError(
                 "An unexpected error occurred while creating the blog post.")
+
+    @jwt_required()
+    def get(self):
+        current_user = get_jwt_identity()
+        username = current_user.get("username")
+        try:
+            user = UserService.get_user_by_username(username)
+            if not username:
+                raise NotFoundError("user not found")
+            
+            posts = BlogPostService.get_blog_posts_by_user_id(user.id)
+            response = [
+                    {
+                        'id': post.id,
+                        'title': post.title,
+                        'content': post.content,
+                        'author_id': post.author_id,
+                        'created_at': post.created_at.isoformat(),
+                        'updated_at': post.updated_at.isoformat()
+                    } for post in posts
+                ]
+            return response, 200
+        except Exception as e:
+            raise InternalServerError("An unexpected error occurred while retrieving the blog posts.")
+    

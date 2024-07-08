@@ -1,7 +1,8 @@
 # tests/test_user_service.py
 
+from datetime import datetime
 from flask import Flask
-from flask_jwt_extended import JWTManager, decode_token
+from flask_jwt_extended import JWTManager, create_access_token, decode_token
 import pytest
 from unittest.mock import patch, MagicMock
 from werkzeug.security import check_password_hash
@@ -113,13 +114,20 @@ def test_login_user_not_found(mock_get_user_by_username, user_data):
     assert "Invalid username or password" in str(excinfo.value)
 
 
-@patch("blog_platform.services.user_services.redis_client.set")
-def test_logout_user_success(mock_redis_set):
-    token = "testtoken"
+def test_logout_user_success(app):
+    with app.app_context():
+        username = "testuser"
+        token = create_access_token(identity={"username": username})
+        decoded_token = decode_token(token)
+        jti = decoded_token["jti"]
+        expires = decoded_token["exp"]
+        now = datetime.now().timestamp()
+        exp_time = expires - now
+        exp_time = int(exp_time)  # Ensure it’s an integer
 
-    UserService.logout_user(token)
-
-    mock_redis_set.assert_called_once_with(token, "", ex=1)
+        with patch("blog_platform.services.user_services.redis_client.set") as mock_redis_set:
+            UserService.logout_user(token)
+            mock_redis_set.assert_called_once_with(jti, "", ex=exp_time)
 
 
 def test_logout_user_missing_token():

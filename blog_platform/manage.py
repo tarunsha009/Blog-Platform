@@ -5,7 +5,7 @@ from flask import Flask, jsonify, request
 from sqlalchemy_utils import create_database, database_exists
 from blog_platform.config import config_by_name
 from blog_platform.core.database.db import db
-from flask_jwt_extended import JWTManager, decode_token
+from flask_jwt_extended import JWTManager, decode_token, verify_jwt_in_request
 
 from blog_platform.utils.errors import UnauthorizedError
 from blog_platform.services.user_services import blacklist
@@ -41,24 +41,19 @@ def make_app(config_name='Dev'):
     def handle_request():
         """Ensure the JWT token is valid for protected routes."""
         if request.endpoint and not is_public_endpoint():
-            if not request.headers.get("Authorization"):
-                raise UnauthorizedError("Missing authorization token")
+            try:
+                verify_jwt_in_request()
+            except Exception:
+                raise UnauthorizedError("Invalid token")
 
             token = request.headers.get("Authorization").split(" ")[1]
             try:
-                decode_token(token)
+                decoded_token = decode_token(token)
+                jti = decoded_token["jti"]
+                if redis_client.get(jti):
+                    raise UnauthorizedError("Token is blacklisted")
             except Exception as e:
                 raise UnauthorizedError("Invalid token")
-
-            # Check if the token is blacklisted
-            if redis_client.get(token):
-                raise UnauthorizedError("Token is blacklisted")
-
-    # Define a protected route for testing
-    @app.route("/protected", methods=["GET"])
-    @token_required
-    def protected():
-        return {"message": "This is a protected route"}
 
     return app
 
